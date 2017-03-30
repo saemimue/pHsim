@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Titration Simulator</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="static/styles.css">
+    </head>
+    <body>
+        <form method=post action="">
+            {% for field in form %}
+                {{ field.name }}
+                {{ field(size=15) }}
+                {{ field.label }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <li><font color="red">{{ error }}</font></li>
+                    {% endfor %}
+                {% endif %}</br>
+            {% endfor %}
+            <input type=submit value=Compute>
+        </form>
+    </body>
+</html>
