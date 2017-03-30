@@ -9,11 +9,12 @@ def index():
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
         titration = titrate(
-                form.c_Ac.data,
-                form.c_B.data,
-                form.pKs_Ac.data,
-                form.pKs_B.data,
-                form.pKs_Tit.data)
+                list(form.c_Ac.data),
+                list(form.c_B.data),
+                list(form.pKs_Ac.data),
+                list(form.pKs_B.data),
+                list(form.pKs_Tit.data))
+
     else:
         titration = None
 
