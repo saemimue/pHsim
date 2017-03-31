@@ -3,6 +3,8 @@
     <head>
         <title>Titration Simulator</title>
         <meta charset="utf-8">
+        {{ result[0]|safe }}
+        {{ result[1]|safe }}
         <link rel="stylesheet" type="text/css" href="static/styles.css">
     </head>
     <body>
@@ -19,5 +21,12 @@
             {% endfor %}
             <input type=submit value=Compute>
         </form>
+        <p>
+        {% if result != None %}
+            {{ result[2]|safe }}
+        {% else %}
+            Error Error Error
+        {% endif %}
+        </p>
     </body>
 </html>

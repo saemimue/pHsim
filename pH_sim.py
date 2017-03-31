@@ -1,6 +1,7 @@
 import numpy as np, sys, imp, ast
 from scipy.optimize import fsolve as fs
 from scipy.optimize import brentq as bq
+import bokeh.plotting as plt
 
 class pH_calc:
     '''
@@ -50,12 +51,6 @@ class pH_calc:
         self.pKs_acids = param[1]
         self.pKs_bases = param[3]
 
-        #print('-----------------------------')
-        #print('pH Function Input from GUI')
-        #print(self.c_acids, self.pKs_acids, self.c_bases, self.pKs_bases)
-        #print(type(self.c_acids),type(self.pKs_acids),type(self.c_bases),type(self.pKs_bases))
-        #print('-----------------------------\n')
-         
         ac = sum(self.c_acids)
         ba = sum(self.c_bases)
         if ac > ba:
@@ -64,14 +59,8 @@ class pH_calc:
         else:
             a = 1e-15
             b = 1e1
-        #pH_fs = -np.log10(fs(self.balance, 1e-7))
         pH_bq = -np.log10(bq(self.balance, a, b, maxiter=10000))
 
-        #print('\n-----------------------------')
-        #print("Der pH-Wert beträgt: {:.2f}".format(pH_bq))
-        #print('-----------------------------')
-        #print('-----------------------------')
-        
         return pH_bq
 
 
@@ -83,10 +72,9 @@ class pH_calc:
         beliebigen Säure/Basen gemisches. Definirt 
         werden die Parameter mit der pH-Funktion.
         '''
-        #print("pH-calls me")
         # summe für säuren
-        C_ac_s = 0  
-        C_ac = 0        
+        C_ac_s = 0
+        C_ac = 0
         i = 0
         for i in range(len(self.pKs_acids)):
             for pKs in self.pKs_acids[i]:
@@ -96,10 +84,10 @@ class pH_calc:
                     c = self.c_acids[i]
                     Ks = 10**(-1*pKs)
                     C_ac += (Ks*c)/(Ks+x)
-                    
+
         # summe für basen
         C_ba_s = 0
-        C_ba = 0        
+        C_ba = 0
         i = 0
         for i in range(len(self.pKs_bases)):
             for pKs in self.pKs_bases[i]:
@@ -111,10 +99,9 @@ class pH_calc:
                     C_ba += (cb*x)/(Ks+x)
 
         A = C_ac_s + C_ac + ((10**(-1*14))/x) - C_ba_s - C_ba - x
-        #print("C_ac_s = {:.5f}".format(A))
 
         return C_ac_s + C_ac + ((10**(-1*14))/x) - C_ba_s - C_ba - x
-   
+
 
     def titration(self,input_string):
         '''
@@ -131,16 +118,11 @@ class pH_calc:
         pKs_bases = param[3]
         pKs_tit = param[4]
 
-        #print('-----------------------------')
-        #print('Titration Function Input from GUI')
-        #print('pH :',c_Acids, pKs_acids, c_Bases, pKs_bases, pKs_tit)
-        #print('-----------------------------\n')
-        
         ac = []
         pK_ac = []
         ba = []
         pK_ba = []
-        
+
         ac = c_Acids[:]
         pK_ac = pKs_acids[:]
         ba = c_Bases[:]
@@ -148,6 +130,7 @@ class pH_calc:
         pH_start = self.pH(input_string)
         pH = [pH_start]
         c_tit = 0
+        x = []
 
         if pH_start < 7:
             pH_end = 14
@@ -160,14 +143,14 @@ class pH_calc:
             modus = 'base'
             pK_ac.append(pKs_tit[0])
 
-        if modus == 'acid':        
+        if modus == 'acid':
             loop = 0
             while pH[loop] <= pH_end and loop <= 2000:
                 b = [i for i in ba]
                 b.append(c_tit)
                 value = self.pH((ac, pK_ac, b, pK_ba))
                 pH.append(value)
-
+                x.append(loop)
                 loop += 1
                 c_tit += step
 
@@ -178,65 +161,33 @@ class pH_calc:
                 a.append(c_tit)
                 value = self.pH((a, pK_ac, ba, pK_ba))
                 pH.append(value)
-
+                x.append(loop)
                 loop += 1
                 c_tit += step
 
-        plt.plot(pH, alpha=0.5, linewidth=3)
-        plt.grid(1)
-        plt.ylabel('pH')
-        plt.xlabel('index')
-        plt.xlim(0, 2000)
-        
+        TOOLS = "reset, box_zoom, save, pan"
+        p = plt.figure(title="Acid/Base Titration Simulation",
+                tools = TOOLS,
+                toolbar_location="above",
+                x_axis_label="increment",
+                y_axis_label="pH",
+                plot_width=500,
+                plot_height=500,
+                )
+        p.line(x=x, y=pH[:-1])
 
-        return  
-
-                    
-class solutions():
-    '''
-    Class contains a few tool to calculate some stuff
-    like the mass which is needed to create a whished 
-    solution.
-    '''
-    def __init__(self):
-        pass
-
-    def calc_mass(inputs):
-        '''
-        This function calculates the mass for a 
-        desired solution
-        '''
-        Molmass = inputs[0]  # Molecular mass [g/mol]
-        conc = inputs[1]     # Molar concentration [mol/L]
-        Volume = inputs[2]   # Volume [L]
-
-        # n = m/M
-        # c = n/V
-        # -> m = c*V*M
-        mass = float(conc) * float(Volume) * float(Molmass)
-
-        return '{:.4f}'.format(mass)
-
-def test(A):
-    '''
-    Function to test connection to gui
-    '''
-    #print('parameters\n')
-    
-    a = A[0]
-    if len(ast.literal_eval(A[1])) == 1:
-        b = [[i] for i in ast.literal_eval(A[1])]
-    else:
-        b = [i for i in ast.literal_eval(A[1])]
-    c = A[2]
-    if len(ast.literal_eval(A[3])) == 1:
-        d = [[i] for i in ast.literal_eval(A[3])]
-    else:
-        d = [i for i in ast.literal_eval(A[3])]
-           
-    print(a)
-    print(b)
-    print(c)
-    print(d)
-
-    return
+        from bokeh.resources import CDN
+        from bokeh.embed import components
+        script, div = components(p)
+        head = """
+        <link rel="stylesheet"
+            href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.4.min.css"
+            type="text/css" />
+        <script type="text/javascript"
+            src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.4.min.js">
+        </script>
+        <script type="text/javascript">
+        Bokeh.set_log_level("info");
+        </script>
+        """
+        return head, script, div
