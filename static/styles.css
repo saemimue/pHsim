@@ -1,4 +1,41 @@
 body {
-    background:lightgrey;
+    background: white;
+    color: #006aa8;
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:1em;
+}
+.header {
+    background: #006aa8;
+    color:white;
+    border: 4px solid;
+    border-color: #006aa8;
+    border-radius: 4px;
+    width:auto;
+    height:auto;
+    margin:auto;
+}
+.header img {
+    float: left;
+    width: 77px;
+    height: 77px;
+    right:20px;
+    margin: 2px;
+}
+.header h1 {
+    font-size:2em;
+    position:relative;
+    right:10px;
+    left:20px;
+}
+.header p {
+    margin:20px;
+}
+.explain {
+    border-color: #006aa8;
+    border-size:4px;
+    border-radius 2px;
+    background: lightgrey;
     color:black;
+    margin:10px;
+    padding:20px;
 }
