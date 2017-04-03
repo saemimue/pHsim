@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, validators
+from wtforms import Form, StringField, validators, SelectField
 
 class InputForm(Form):
     c_Ac = StringField(
@@ -16,3 +16,4 @@ class InputForm(Form):
     pKs_Tit = StringField(
             label='pKs(Tit)', default="[14]",
             validators=[validators.InputRequired()])
+    erase = SelectField('clear?', choices=[('True', 'Yes'),('False', 'No')])

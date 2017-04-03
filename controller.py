@@ -12,6 +12,7 @@ def index():
         Kb = form.pKs_B.data
         Ka = form.pKs_Ac.data
         Kt = form.pKs_Tit.data
+        erase = form.erase.data
 
         # collect pKs Base
         if Kb.startswith('[') == False:
@@ -57,7 +58,7 @@ def index():
         else:
             pKs_Tit = [i for i in ast.literal_eval(Kt)]
 
-        result = titrate(c_Ac,c_B,pKs_Ac,pKs_B,pKs_Tit)
+        result = titrate(c_Ac,c_B,pKs_Ac,pKs_B,pKs_Tit,erase)
 
     else:
         result = None
