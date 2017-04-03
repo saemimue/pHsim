@@ -8,7 +8,7 @@ psi = p.pH_calc()
 
 def titrate(c_Ac, c_B, pKs_Ac, pKs_B, pKs_Tit):
     values = (c_Ac,  pKs_Ac, c_B, pKs_B, pKs_Tit)
-    x, pH = psi.titration(values)
+    x, pH, a, b = psi.titration(values)
     print (len(x),len(pH))
     return x, pH
 
@@ -40,7 +40,7 @@ def show(c_Ac, c_B, pKs_Ac, pKs_B, pKs_Tit,erase):
             line_color=col,
             line_width=2,
             )
-
+    p.circle(x, pH, color=col)
     script, div = components(p)
     head = """
     <link rel="stylesheet"

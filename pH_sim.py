@@ -34,7 +34,7 @@ class pH_calc:
     [2e-5]
     [[9.25]]
     '''
-    def pH(self,input_string):
+    def pH(self,input_string, a, b):
         '''
         Berechnet aufgrund der Protonenbilanz die H+ Konzentration
         aus. Summe Basen - Summe Säuren muss 0 ergeben, daher wird
@@ -53,13 +53,15 @@ class pH_calc:
 
         ac = sum(self.c_acids)
         ba = sum(self.c_bases)
+        """
         if ac > ba:
-            a = 1e-15
-            b = 1e1
+            a = 1e-11
+            b = 1e-3
         else:
-            a = 1e-15
-            b = 1e1
-        pH_bq = -np.log10(bq(self.balance, a, b, maxiter=10000))
+            a = 1e1
+            b = 1e-14
+        """
+        pH_bq = -np.log10(bq(self.balance, a, b, maxiter=150))
 
         return pH_bq
 
@@ -98,8 +100,6 @@ class pH_calc:
                     Ks = 10**(-1*pKs)
                     C_ba += (cb*x)/(Ks+x)
 
-        A = C_ac_s + C_ac + ((10**(-1*14))/x) - C_ba_s - C_ba - x
-
         return C_ac_s + C_ac + ((10**(-1*14))/x) - C_ba_s - C_ba - x
 
 
@@ -127,7 +127,7 @@ class pH_calc:
         pK_ac = pKs_acids[:]
         ba = c_Bases[:]
         pK_ba = pKs_bases[:]
-        pH_start = self.pH(input_string)
+        pH_start = self.pH(input_string,1e-15,1e1)
         pH = [pH_start]
         c_tit = 0
         x = []
@@ -145,10 +145,14 @@ class pH_calc:
 
         if modus == 'acid':
             loop = 0
+            start = 1e-20
+            end = 1e1
             while pH[loop] <= pH_end and loop <= 2000:
                 b = [i for i in ba]
                 b.append(c_tit)
-                value = self.pH((ac, pK_ac, b, pK_ba))
+                value = self.pH((ac, pK_ac, b, pK_ba), start, end)
+                start = 1e-20 # 10 ** (-1 * (value - 15))
+                end = 1 # 10 ** (-1 * (value + 15))
                 pH.append(value)
                 x.append(loop)
                 loop += 1
@@ -156,13 +160,17 @@ class pH_calc:
 
         if modus == 'base':
             loop = 0
+            start = 1e-20
+            end = 1
             while pH[loop] >= pH_end and loop <= 2000:
                 a = [i for i in ac]
                 a.append(c_tit)
-                value = self.pH((a, pK_ac, ba, pK_ba))
+                value = self.pH((a, pK_ac, ba, pK_ba), start, end)
+                start = 1e-20 # 10 ** (-1 * (value - 5))
+                end = 1 # 10 ** (-1 * (value + 2.28))
                 pH.append(value)
                 x.append(loop)
                 loop += 1
                 c_tit += step
 
-        return x, pH[:-1]
+        return x, pH[:-1], start, end
