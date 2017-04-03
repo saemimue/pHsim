@@ -1,7 +1,8 @@
-import numpy as np, pandas as pd, os
+import numpy as np, pandas as pd, os, random
 import pH_sim as p
 import bokeh.plotting as plt
 from bokeh.embed import components
+from bokeh.palettes import Category10
 
 psi = p.pH_calc()
 
@@ -11,28 +12,34 @@ def titrate(c_Ac, c_B, pKs_Ac, pKs_B, pKs_Tit):
     print (len(x),len(pH))
     return x, pH
 
-col = []
-def show(c_Ac, c_B, pKs_Ac, pKs_B, pKs_Tit,erase):
-    global col
-    TOOLS = "reset, box_zoom, save, pan"
-    p = plt.figure(title="Acid/Base Titration Simulation",
-            tools = TOOLS,
-            toolbar_location = "above",
-            x_axis_label = "increment",
-            y_axis_label = "pH",
-            plot_width = 500,
-            plot_height = 500,
-            )
-    if erase == "True":
-        col = []
-        x, pH = titrate(c_Ac, c_B, pKs_Ac, pKs_B, pKs_Tit)
-        col.append([x, pH])
-    else:
-        x, pH = titrate(c_Ac, c_B, pKs_Ac, pKs_B, pKs_Tit)
-        col.append([x, pH])
+TOOLS = "reset, box_zoom, save, pan"
+p = plt.figure(title="Acid/Base Titration Simulation",
+        tools = TOOLS,
+        toolbar_location = "above",
+        x_axis_label = "increment",
+        y_axis_label = "pH",
+        plot_width = 500,
+        plot_height = 500,
+        )
 
-    for i in range(len(col)):
-        p.line(x = col[i][0], y = col[i][1])
+def show(c_Ac, c_B, pKs_Ac, pKs_B, pKs_Tit,erase):
+    global p
+    if erase == "True":
+        TOOLS = "reset, box_zoom, save, pan"
+        p = plt.figure(title="Acid/Base Titration Simulation",
+                tools = TOOLS,
+                toolbar_location = "above",
+                x_axis_label = "increment",
+                y_axis_label = "pH",
+                plot_width = 500,
+                plot_height = 500,
+                )
+    col = random.choice(Category10[10])
+    x, pH = titrate(c_Ac, c_B, pKs_Ac, pKs_B, pKs_Tit)
+    p.line(x = x, y = pH,
+            line_color=col,
+            line_width=2,
+            )
 
     script, div = components(p)
     head = """
