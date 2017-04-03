@@ -1,5 +1,5 @@
 from model import InputForm
-from compute import titrate, pH
+from compute import titrate, show
 from flask import Flask, render_template, request
 import ast
 
@@ -58,7 +58,7 @@ def index():
         else:
             pKs_Tit = [i for i in ast.literal_eval(Kt)]
 
-        result = titrate(c_Ac,c_B,pKs_Ac,pKs_B,pKs_Tit,erase)
+        result = show(c_Ac,c_B,pKs_Ac,pKs_B,pKs_Tit,erase)
 
     else:
         result = None

@@ -165,29 +165,4 @@ class pH_calc:
                 loop += 1
                 c_tit += step
 
-        TOOLS = "reset, box_zoom, save, pan"
-        p = plt.figure(title="Acid/Base Titration Simulation",
-                tools = TOOLS,
-                toolbar_location="above",
-                x_axis_label="increment",
-                y_axis_label="pH",
-                plot_width=500,
-                plot_height=500,
-                )
-        p.line(x=x, y=pH[:-1])
-
-        from bokeh.resources import CDN
-        from bokeh.embed import components
-        script, div = components(p)
-        head = """
-        <link rel="stylesheet"
-            href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.4.min.css"
-            type="text/css" />
-        <script type="text/javascript"
-            src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.4.min.js">
-        </script>
-        <script type="text/javascript">
-        Bokeh.set_log_level("info");
-        </script>
-        """
-        return head, script, div
+        return x, pH[:-1]
