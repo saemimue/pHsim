@@ -40,7 +40,6 @@ def show(c_Ac, c_B, pKs_Ac, pKs_B, pKs_Tit,erase):
             line_color=col,
             line_width=2,
             )
-    p.circle(x, pH, color=col)
     script, div = components(p)
     head = """
     <link rel="stylesheet"

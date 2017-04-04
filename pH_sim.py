@@ -1,5 +1,5 @@
 import numpy as np, sys, imp, ast
-from scipy.optimize import fsolve as fs
+from scipy.optimize import newton as nt
 from scipy.optimize import brentq as bq
 import bokeh.plotting as plt
 
@@ -45,23 +45,37 @@ class pH_calc:
         form ([],[[]],[],[[]]) is needed (c_acid, pKs_acid, c_base,
         pKs_base).
         '''
+        # These parameters were used from the balance function below
         param = input_string[:]
         self.c_acids = param[0]
         self.c_bases = param[2]
         self.pKs_acids = param[1]
         self.pKs_bases = param[3]
 
-        ac = sum(self.c_acids)
-        ba = sum(self.c_bases)
-        """
-        if ac > ba:
-            a = 1e-11
-            b = 1e-3
-        else:
-            a = 1e1
-            b = 1e-14
-        """
-        pH_bq = -np.log10(bq(self.balance, a, b, maxiter=150))
+        # this happens if a strong acid is titrated
+        max_iter = 0
+        while self.balance(a) < 0 and max_iter < 50 and self.balance(b) < 0:
+            a = a/10
+            print("blop a: ",a)
+            max_iter += 1
+
+        # This happens if a strong base is titrated
+        max_iter = 0
+        while self.balance(b) > 0 and max_iter < 50 and self.balance(a) > 0:
+            b = b*10
+            print("blop b: ",b)
+            max_iter += 1
+
+        # print(self.balance(a))
+        # print(self.balance(b))
+
+        pH_bq = -np.log10(bq(self.balance,
+            a,
+            b,
+            xtol=10e-20,
+            rtol=4.5e-16,
+            maxiter=1500,
+            ))
 
         return pH_bq
 
@@ -145,14 +159,14 @@ class pH_calc:
 
         if modus == 'acid':
             loop = 0
-            start = 1e-20
+            start = 1e-5
             end = 1e1
             while pH[loop] <= pH_end and loop <= 2000:
                 b = [i for i in ba]
                 b.append(c_tit)
                 value = self.pH((ac, pK_ac, b, pK_ba), start, end)
-                start = 1e-20 # 10 ** (-1 * (value - 15))
-                end = 1 # 10 ** (-1 * (value + 15))
+                start = 10 ** (-1 * (value + 2))
+                end = 10 ** (-1 * (value - 2))
                 pH.append(value)
                 x.append(loop)
                 loop += 1
@@ -160,14 +174,14 @@ class pH_calc:
 
         if modus == 'base':
             loop = 0
-            start = 1e-20
+            start = 1e-12
             end = 1
             while pH[loop] >= pH_end and loop <= 2000:
                 a = [i for i in ac]
                 a.append(c_tit)
                 value = self.pH((a, pK_ac, ba, pK_ba), start, end)
-                start = 1e-20 # 10 ** (-1 * (value - 5))
-                end = 1 # 10 ** (-1 * (value + 2.28))
+                start = 10 ** (-1 * (value + 2))
+                end = 10 ** (-1 * (value - 2))
                 pH.append(value)
                 x.append(loop)
                 loop += 1
