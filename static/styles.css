@@ -4,38 +4,50 @@ body {
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size:1em;
 }
-.header {
-    background: #006aa8;
+header,
+section,
+aside,
+footer {
+    margin: 0 1.5% 24px 1.5%;
+}
+header {
+    background: grey;
     color:white;
     border: 4px solid;
-    border-color: #006aa8;
+    border-color: grey;
     border-radius: 4px;
     width:auto;
     height:auto;
-    margin:auto;
 }
-.header img {
+header img {
     float: left;
     right:20px;
     width: 5em;
     height: 5em;
-    margin:auto;
+    padding:5px;
 }
-.header h1 {
+header h1 {
     font-size:2em;
     position:relative;
     right:10px;
     left:20px;
 }
-.header p {
+header p {
     margin:20px;
 }
-.explain {
-    border-color: #006aa8;
-    border-size:4px;
-    border-radius 2px;
+section {
+    float: left;
+    width: 30%;
+}
+aside {
+    float: right;
+    width: 60%;
+}
+footer {
+    clear: both;
+    margin-bottom: 0;
     background: lightgrey;
-    color:black;
-    margin:10px;
-    padding:20px;
+    border:4px solid;
+    border-color:lightgrey;
+    border-radius:4px;
 }

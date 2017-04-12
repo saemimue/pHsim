@@ -6,49 +6,50 @@
         {{ result[0]|safe }}
         {{ result[1]|safe }}
         <link rel="stylesheet" type="text/css" href="static/styles.css">
-        <link rel="icon" href="static/icon.png">
+        <link rel="icon" href="static/icon1.png">
     </head>
     <body>
-        <div class="header">
+        <header>
             <img src="static/muhn2.png" />
             <h1>Acid/Base Titration Simulator</h1>
-        </div>
-        <table>
-            <tr><td>
-                <form method=post action="">
-                    <table>
-                    {% for field in form %}
-                        <tr>
-                            <td>
-                            {{ field.label(size=30) }}
-                            </td>
-                            <td>
-                            {{ field(size=15) }}
-                            </td>
-                            <td>
-                            {% if field.errors %}
-                                {% for error in field.errors %}
-                                    <li><font color="red">{{ error }}</font></li>
-                                {% endfor %}
-                            {% endif %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        <tr><td></td></tr>
-                        <tr><td></td><td>
-                            <input type=submit value=Compute>
-                        </td></tr>
-                    </table>
-                </form>
-            </td>
-            <td>
-                {% if result != None %}
-                    {{ result[2]|safe }}
-                {% endif %}
-            </td>
-            <td>
-                <p class="explain">
-                 <strong>Explanation:</strong><br>   
+        </header>
+
+        <section>
+            <form method=post action="">
+                <table>
+                {% for field in form %}
+                    <tr>
+                        <td>
+                        {{ field.label(size=30) }}
+                        </td>
+                        <td>
+                        {{ field(size=15) }}
+                        </td>
+                        <td>
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <li><font color="red">{{ error }}</font></li>
+                            {% endfor %}
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr><td></td></tr>
+                <tr><td></td><td>
+                    <input type=submit value=Compute>
+                </td></tr>
+                </table>
+            </form>
+        </section>
+
+        <aside>
+            {% if result != None %}
+                {{ result[2]|safe }}
+            {% endif %}
+        </aside>
+
+         <footer>
+            <strong>Explanation:</strong><br>   
                  With this application it is possible to simulate a
                  titration of any mixture of acids and bases. The
                  concentrations can be entered comma separated as it is
@@ -57,11 +58,12 @@
                  brackets [...]. A species can have as many pKs values 
                  as needed. If you have only bases or only acids, enter for the
                  opposit "0" as a concentration and [0] as pKs value. 
+                 pKs(Tit) is the pKs value of the titration agent. So if you
+                 use Sodiumhydroxide to titrate something just add [14].
                  To execute the simulation enter the compute
                  button.
-                </p>
-            </td>
-            </tr>
-        </table>
+        </footer>
+       
+
     </body>
 </html>
