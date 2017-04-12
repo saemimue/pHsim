@@ -16,10 +16,10 @@ body {
 }
 .header img {
     float: left;
-    width: 77px;
-    height: 77px;
     right:20px;
-    margin: 2px;
+    width: 5em;
+    height: 5em;
+    margin:auto;
 }
 .header h1 {
     font-size:2em;
