@@ -9,6 +9,10 @@ app = Flask(__name__)
 def index():
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
+        v_Ac = form.v_Ac.data
+        v_B = form.v_B.data
+        v_sample = form.v_sample.data
+        v_tit = form.v_Tit.data
         Kb = form.pKs_B.data
         Ka = form.pKs_Ac.data
         Kt = form.pKs_Tit.data
@@ -39,12 +43,29 @@ def index():
             c_Ac = [0]
         else:
             c_Ac = [float(i) for i in form.c_Ac.data.split(',')]
+        # collect v(Ac)
+        if len(str(form.v_Ac.data).strip()) == 0:
+            v_Ac = [0]
+        else:
+            v_Ac = [float(i) for i in form.v_Ac.data.split(',')]
 
         # collect c(Ba)
         if len(str(form.c_B.data).strip()) == 0:
             c_B = [0]
         else:
             c_B = [float(i) for i in form.c_B.data.split(',')]
+        # collect v(Ba)
+        if len(str(form.v_B.data).strip()) == 0:
+            v_B = [0]
+        else:
+            v_B = [float(i) for i in form.v_B.data.split(',')]
+
+        # collect c(Tit)
+        if len(str(form.c_Tit.data).strip()) == 0:
+            c_Tit = [0]
+        else:
+            c_Tit = [float(i) for i in form.c_Tit.data.split(',')]
+
 
         # collect pKs(Tit)
         if Kt.startswith('[') == False:
@@ -58,7 +79,30 @@ def index():
         else:
             pKs_Tit = [i for i in ast.literal_eval(Kt)]
 
-        result = show(c_Ac,c_B,pKs_Ac,pKs_B,pKs_Tit,erase)
+        # collect v_sample
+        if len(str(form.v_sample.data).strip()) == 0:
+            v_sample = [0]
+        else:
+            v_sample = [float(i) for i in form.v_sample.data.split(',')]
+        # collect v_tit
+        if len(str(form.v_Tit.data).strip()) == 0:
+            v_Tit = [0]
+        else:
+            v_Tit = [float(i) for i in form.v_Tit.data.split(',')]
+
+
+        result = show(v_Ac,
+                c_Ac,
+                pKs_Ac,
+                v_B,
+                c_B,
+                pKs_B,
+                v_sample,
+                c_Tit,
+                v_Tit,
+                pKs_Tit,
+                erase
+                )
 
     else:
         result = None
