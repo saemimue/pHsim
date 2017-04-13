@@ -196,7 +196,7 @@ class pH_calc:
             loop = 0
             start = 1e-12
             end = 1
-            while pH[loop] >= pH_end and loop <= 2000:
+            while pH[loop] >= pH_end and v_Tit_run <= v_Tit[0]:
                 a = [i for i in ac]
                 a.append(c_tit)
                 # get pH value
@@ -204,8 +204,10 @@ class pH_calc:
                 start = 10 ** (-1 * (value + 2))
                 end = 10 ** (-1 * (value - 2))
                 pH.append(value)
-                x.append(loop)
+                v_sample[0] += step
+                v_Tit_run += step
+                x.append(v_Tit_run * 1000)
                 loop += 1
-                c_tit += step
+                c_tit += c_Tit[0] * step / v_sample[0]
 
         return x, pH, start, end
