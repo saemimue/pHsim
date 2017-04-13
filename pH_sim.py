@@ -179,13 +179,23 @@ class pH_calc:
             start = 1e-5
             end = 1e1
             while pH[loop] <= pH_end and v_Tit_run <= v_Tit[0]:
+                # First calculate the increasing dilution of acid/base
+                ac = []
+                ba = []
+                for i in range(len(c_Acids)):
+                    ac.append(c_Acids[i] * v_Acids[i] / v_sample[0])
+                for i in range(len(c_Bases)):
+                    ba.append(c_Bases[i] * v_Bases[i] / v_sample[0])
                 b = [i for i in ba]
                 b.append(c_tit)
+
                 # get pH value
                 value = self.pH((ac, pK_ac, b, pK_ba), start, end)
                 start = 10 ** (-1 * (value + 2))
                 end = 10 ** (-1 * (value - 2))
                 pH.append(value)
+
+                # Increase volume, concentration and so on
                 v_sample[0] += step
                 v_Tit_run += step
                 x.append(v_Tit_run * 1000)
@@ -197,13 +207,23 @@ class pH_calc:
             start = 1e-12
             end = 1
             while pH[loop] >= pH_end and v_Tit_run <= v_Tit[0]:
+                # First calculate the increasing dilution of acid/base
+                ac = []
+                ba = []
+                for i in range(len(c_Acids)):
+                    ac.append(c_Acids[i] * v_Acids[i] / v_sample[0])
+                for i in range(len(c_Bases)):
+                    ba.append(c_Bases[i] * v_Bases[i] / v_sample[0])
                 a = [i for i in ac]
                 a.append(c_tit)
+
                 # get pH value
                 value = self.pH((a, pK_ac, ba, pK_ba), start, end)
                 start = 10 ** (-1 * (value + 2))
                 end = 10 ** (-1 * (value - 2))
                 pH.append(value)
+
+                # Increase volume, concentration and so on
                 v_sample[0] += step
                 v_Tit_run += step
                 x.append(v_Tit_run * 1000)
