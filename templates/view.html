@@ -16,29 +16,39 @@
 
         <section>
             <form method=post action="">
-                <table>
                 {% for field in form %}
-                    <tr>
-                        <td>
-                        {{ field.label(size=30) }}
-                        </td>
-                        <td>
-                        {{ field(size=15) }}
-                        </td>
-                        <td>
-                        {% if field.errors %}
-                            {% for error in field.errors %}
-                                <li><font color="red">{{ error }}</font></li>
-                            {% endfor %}
-                        {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                <tr><td></td></tr>
-                <tr><td></td><td>
-                    <input type=submit value=Compute>
-                </td></tr>
+                <table>
+                {% if field.name == "v_Ac" %}
+                <tr><td><i>V</i>(Acids) [L]</td><td>{{ field(size=20) }}</td></tr>
+                {% elif field.name == "c_Ac" %}
+                <tr><td><i>c</i>(Acids) [mol/L]</td><td>{{ field(size=20) }}</td></tr>
+                {% elif field.name == "pKs_Ac" %}
+                <tr><td>pKs(Acids) </td><td>{{ field(size=20) }}</td></tr>
+                {% elif field.name == "v_B" %}
+                <hr>
+                <tr><td><i>V</i>(Bases) [L]</td><td>{{ field(size=20) }}</td></tr>
+                {% elif field.name == "c_B" %}
+                <tr><td><i>c</i>(Bases) [mol/L]</td><td>{{ field(size=20) }}</td></tr>
+                {% elif field.name == "pKs_B" %}
+                <tr><td>pKs(Bases) </td><td>{{ field(size=20) }}</td></tr>
+                {% elif field.name == "v_sample" %}
+                <hr>
+                <tr><td><i>V</i>(Total) [L]</td><td>{{ field(size=20) }}</td></tr>
+                {% elif field.name == "v_Tit" %}
+                <tr><td><i>V</i>(Titrant) [L]</td><td>{{ field(size=20) }}</td></tr>
+                {% elif field.name == "c_Tit" %}
+                <hr>
+                <tr><td><i>c</i>(Titrant) [mol/L]</td><td>{{ field(size=20) }}</td></tr>
+                {% elif field.name == "pKs_Tit" %}
+                <tr><td>pKs(Titrant) </td><td>{{ field(size=20) }}</td></tr>
+                {% elif field.name == "erase" %}
+                <hr>
+                <tr><td>New Figure ?</td><td>{{ field(size=20) }}</td></td>
                 </table>
+                <hr>
+                {% endif %}
+                {% endfor %}
+                <input type=submit value=Compute>
             </form>
         </section>
 

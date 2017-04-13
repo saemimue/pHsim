@@ -8,6 +8,8 @@ app = Flask(__name__)
 @app.route('/Titration-Simulator', methods=['GET', 'POST'])
 def index():
     form = InputForm(request.form)
+    print(form)
+    print(type(form))
     if request.method == 'POST' and form.validate():
         v_Ac = form.v_Ac.data
         v_B = form.v_B.data
