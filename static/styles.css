@@ -10,44 +10,61 @@ aside,
 footer {
     margin: 0 1.5% 24px 1.5%;
 }
-header {
-    background: grey;
-    color:white;
-    border: 4px solid;
-    border-color: grey;
-    border-radius: 4px;
-    width:auto;
-    height:auto;
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
 }
-header img {
+.active {
+    background-color: #4caf50;
+}
+li {
+    float: left;
+}
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+li a:hover {
+    background-color: #6ccc50;
+}
+ul img {
     float: left;
     right:20px;
     width: 5em;
     height: 5em;
     padding:5px;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
 }
-header h1 {
+h1 {
     font-size:2em;
     position:relative;
     right:10px;
     left:20px;
-}
-header p {
-    margin:20px;
+    color:white;
 }
 section {
+    margin:25px;
     float: left;
     width: 30%;
 }
+section li {
+    float:left;
+    background-color: white;
+}
 aside {
+    margin: 25px;
     float: right;
     width: 60%;
 }
 footer {
+    margin: 25px;
     clear: both;
     margin-bottom: 0;
-    background: lightgrey;
-    border:4px solid;
-    border-color:lightgrey;
-    border-radius:4px;
 }

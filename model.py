@@ -33,4 +33,5 @@ class InputForm(Form):
             label='pKs(Tit)', default="[14]",
             validators=[validators.InputRequired()])
     erase = RadioField('New Figure?', choices=[('True', 'Yes'),
-            ('False', 'No')])
+            ('False', 'No')],
+            default='True')
