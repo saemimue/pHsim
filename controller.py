@@ -1,27 +1,27 @@
 from model import InputForm
-from compute import titrate, show
+from compute import show
 from flask import Flask, render_template, request
 import ast
 
 app = Flask(__name__)
 
+
 @app.route('/Titration-Simulator', methods=['GET', 'POST'])
 def index():
     form = InputForm(request.form)
     print(form)
-    print(type(form))
+    print((type(form)))
     if request.method == 'POST' and form.validate():
         v_Ac = form.v_Ac.data
         v_B = form.v_B.data
         v_sample = form.v_sample.data
-        v_tit = form.v_Tit.data
         Kb = form.pKs_B.data
         Ka = form.pKs_Ac.data
         Kt = form.pKs_Tit.data
         erase = form.erase.data
 
         # collect pKs Base
-        if Kb.startswith('[') == False:
+        if Kb.startswith('[') is False:
             pKs_B = []
         elif Kb.count('],[') == 0 and len(ast.literal_eval(Kb)) == 1:
             pKs_B = [[i] for i in ast.literal_eval(Kb)]
@@ -31,7 +31,7 @@ def index():
             pKs_B = [i for i in ast.literal_eval(Kb)]
 
         # collect pKs Acid
-        if Ka.startswith('[') == False:
+        if Ka.startswith('[') is False:
             pKs_Ac = []
         elif Ka.count('],[') == 0 and len(ast.literal_eval(Ka)) == 1:
             pKs_Ac = [[i] for i in ast.literal_eval(Ka)]
@@ -68,9 +68,8 @@ def index():
         else:
             c_Tit = [float(i) for i in form.c_Tit.data.split(',')]
 
-
         # collect pKs(Tit)
-        if Kt.startswith('[') == False:
+        if Kt.startswith('[') is False:
             pKs_Ac = [[7]]
             Err_msg = "Error! No Titration agent was selected."
             return Err_msg
@@ -92,7 +91,6 @@ def index():
         else:
             v_Tit = [float(i) for i in form.v_Tit.data.split(',')]
 
-
         result = show(v_Ac,
                 c_Ac,
                 pKs_Ac,
@@ -109,7 +107,7 @@ def index():
     else:
         result = None
 
-    return render_template('view.html',form=form,result=result)
+    return render_template('view.html', form=form, result=result)
 
-if __name__=='__main__':
+if __name__ == '__main__':
     app.run(debug=True)

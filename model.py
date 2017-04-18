@@ -1,4 +1,5 @@
-from wtforms import Form, StringField, validators, SelectField, RadioField
+from wtforms import Form, StringField, validators, RadioField
+
 
 class InputForm(Form):
     v_Ac = StringField(
