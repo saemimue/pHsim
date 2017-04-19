@@ -12,23 +12,60 @@
             <li><img src="{{ url_for('static',filename='muhn2.png') }}" /></li>
             <li><h1>Acid/Base Titration Simulator</h1></li>
             <li style="float:right"><a class="active" href="">Help</a></li>
-            <li style="float:right"><a href="#contact">Contact</a></li>
+            <li style="float:right"><a href="/Titration-Simulator/about">About</a></li>
             <li style="float:right"><a href="/Titration-Simulator">Home</a></li>
         </ul>
-        <footer>
-            <h2>Explanation:</h2><br>
-                 With this application it is possible to simulate a
-                 titration of any mixture of acids and bases. The
-                 concentrations can be entered comma separated as it is
-                 shown with the default values. To enter pKs values,
-                 you have to write them comma separated between
-                 brackets [...]. A species can have as many pKs values
-                 as needed. If you have only bases or only acids, enter for the
-                 opposit "0" as a concentration and [0] as pKs value.
-                 pKs(Tit) is the pKs value of the titration agent. So if you
-                 use Sodiumhydroxide to titrate something just add [14].
-                 To execute the simulation enter the compute
-                 button.
-        </footer>
+        <article>
+            <h2>How To</h2>
+                <div class="help">
+                    <h4 id="one">How to titrate one acid with a base?</h4>
+                        <p>
+                        1. Add the volume of your sample in <strong>liter</strong><br>
+                        2. Add a concentration of your sample in <strong>mol/L</strong><br>
+                        3. Add the pK<strong>s</strong> value(s) of your acidic sample. Your acid may have
+                        several pKs values so you have to enter them in square brackets e.g [2.16, 7.21, 12.32]
+                        for phosphoric acid or [-6] for hydrochloric acid.<br>
+                        4. Set the base volume and concentration to zero and enter [0] for the pKs values.</br>
+                        5. Enter your total volume (liter). If you titrate your acidic sample without dilution
+                        you can enter the same volume as you entered as sample volume (step 1). If your acidic
+                        sample is diluted with water, enter the total volume after dilution.<br>
+                        6. Add the concentration of your titrant (base to titrate your acidic sample)</br>
+                        7. Add the volume of your titrant</br>
+                        8. Add the pK<strong>s</strong> value(s) of your titrant e.g. [14] for sodium hydroxide
+                        or [9.25] for ammonia. Here, the pKs values have also to be in square brackets</br>
+                        9. Click <i>Compute</i> button to simulate the titration
+                        </p>
+                    <h4 id="two">How to titrate a base with an acid?</h4>
+                        <p>
+                        1. Set the volume and the concentration of the acid zero and enter [0] as the pKs
+                        value of the acid.<br>
+                        2. Add the volume of your alkaline sample in <strong>liter</strong><br>
+                        3. Add the conentration of your alkaline sample in <strong>mol/L</strong><br>
+                        4. Add the pK<strong>s</strong> value(s) of your base. Your base may have
+                        several pKs values so you have to enter them in square brackets e.g. [2.16, 7.21, 12.32]
+                        for Tripotassium phosphate or [9.25] for ammonia.<br>
+                        5. Follow the steps 5 to 9 above.
+                        </p>
+                    <h4 id="three">How to titrate multiple acids with a base?</h4>
+                        <p>
+                        1. Add your acid volumes comma seperated in liter e.g. 0.02, 0.015 (20 ml acid A, 15 ml acid B)<br>
+                        2. Add your acid concentrations comma seperated in mol/L e.g. 0.1, 0.05 (acid A = 0.1 M, acid B = 0.05 M)<br>
+                        3. Add your pKs values in comma sepearted square brackets e.g. [-6],[2.16, 7.21, 12.32]
+                        acid A = HCl, acid B = H3PO4. Your acids may have as many pKs values as you need.
+                        4. Follow the steps 4 to 9 above.
+                        </p>
+                    <h4 id="four">How to titrate multiple bases with an acid?</h4>
+                        <p>
+                        Have a look at the question <i>How to titrate multiple acids with a base?</i>
+                        </p>
+                    <h4 id="five">How to titrate a mixture of acids and bases?</h4>
+                        <p>
+                        It works like the titration of multiple acids combined with the titration of
+                        multiple bases. You should know wheter your sample mixture is acidic or alkaline. So you can
+                        choose the right titrant. It might be, that you get useless results, if you titrate an acid with an acid
+                        for example.
+                        </p>
+                </div>
+        </article>
     </body>
 </html>

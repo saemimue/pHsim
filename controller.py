@@ -7,8 +7,8 @@ app = Flask(__name__)
 
 
 @app.route('/Titration-Simulator/<string:page_name>/')
-def help(page_name):
-    return render_template('help.html', page=page_name)
+def static_page(page_name):
+    return render_template(page_name + '.html', page=page_name)
 
 
 @app.route('/Titration-Simulator', methods=['GET', 'POST'])

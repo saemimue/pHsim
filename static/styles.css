@@ -36,14 +36,12 @@ li a:hover {
 ul img {
     float: left;
     right:20px;
-    width: 5em;
-    height: 5em;
+    width: 4em;
+    height: 4em;
     padding:5px;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
 }
 h1 {
-    font-size:2em;
+    font-size:1.5em;
     position:relative;
     right:10px;
     left:20px;
@@ -63,8 +61,24 @@ aside {
     float: right;
     width: 60%;
 }
-footer {
-    margin: 25px;
-    clear: both;
-    margin-bottom: 0;
+.table-of-contents {
+  float: right;
+  width: 40%;
+  background: #eee;
+  font-size: 0.8em;
+  padding: 1em 2em;
+  margin: 0 0 0.5em 0.5em;
+}
+.table-of-contents ul {
+  padding: 0;
+}
+.table-of-contents li {
+  margin: 0 0 0.25em 0;
+}
+.table-of-contents a {
+  text-decoration: none;
+}
+.table-of-contents a:hover,
+.table-of-contents a:active {
+  text-decoration: underline;
 }
