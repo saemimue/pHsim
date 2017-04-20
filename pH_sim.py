@@ -51,6 +51,7 @@ class pH_calc:
         self.pKs_acids = param[1]
         self.c_bases = param[2]
         self.pKs_bases = param[3]
+        self.v_tot = param[4]
 
 
         # this happens if a strong acid is titrated
@@ -97,9 +98,9 @@ class pH_calc:
         for i in range(len(self.pKs_acids)):
             for pKs in self.pKs_acids[i]:
                 if pKs <= 0:        # für starke säuren
-                    C_ac_s += self.c_acids[i]
+                    C_ac_s += self.c_acids[i] * self.v_tot
                 else:               # für schwache säuren
-                    c = self.c_acids[i]
+                    c = self.c_acids[i] * self.v_tot
                     Ks = 10**(-1*pKs)
                     C_ac += (Ks*c)/(Ks+x)
 
@@ -157,7 +158,8 @@ class pH_calc:
             ba.append(c_Bases[i] * v_Bases[i] / v_sample[0])
         print(ba)
 
-        pH_start = self.pH((ac, pKs_acids, ba, pKs_bases), 1e-15, 1e1)
+        pH_start = self.pH((ac, pKs_acids, ba, pKs_bases, v_sample[0]),
+                1e-15, 1e1)
         pH = [pH_start]
         x = [0]
 
@@ -178,19 +180,19 @@ class pH_calc:
             loop = 0
             start = 1e-5
             end = 1e1
+
             while pH[loop] <= pH_end and v_Tit_run <= v_Tit[0]:
                 # First calculate the increasing dilution of acid/base
                 ac = []
-                ba = []
                 for i in range(len(c_Acids)):
                     ac.append(c_Acids[i] * v_Acids[i] / v_sample[0])
                 for i in range(len(c_Bases)):
                     ba.append(c_Bases[i] * v_Bases[i] / v_sample[0])
-                b = [i for i in ba]
-                b.append(c_tit)
+                c_Bases.append(c_tit)
+                pKs_bases.append(pKs_tit)
 
                 # get pH value
-                value = self.pH((ac, pK_ac, b, pK_ba), start, end)
+                value = self.pH((ac, pK_ac, ba, pK_ba,v_sample[0]), start, end)
                 start = 10 ** (-1 * (value + 2))
                 end = 10 ** (-1 * (value - 2))
                 pH.append(value)
