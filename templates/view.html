@@ -9,11 +9,13 @@
         <link rel="icon" href="static/icon1.png">
     </head>
     <body>
-        <header>
-            <img src="static/muhn2.png" />
-            <h1>Acid/Base Titration Simulator</h1>
-        </header>
-
+        <ul>
+            <li><img src="static/muhn2.png" /></li>
+            <li><h1>Acid/Base Titration Simulator</h1></li>
+            <li style="float:right"><a class="active" href="Titration-Simulator/help">Help</a></li>
+            <li style="float:right"><a href="Titration-Simulator/about">About</a></li>
+            <li style="float:right"><a href="">Home</a></li>
+        </ul>
         <section>
             <form method=post action="">
                 {% for field in form %}
@@ -57,23 +59,5 @@
                 {{ result[2]|safe }}
             {% endif %}
         </aside>
-
-         <footer>
-            <strong>Explanation:</strong><br>   
-                 With this application it is possible to simulate a
-                 titration of any mixture of acids and bases. The
-                 concentrations can be entered comma separated as it is
-                 shown with the default values. To enter pKs values,
-                 you have to write them comma separated between 
-                 brackets [...]. A species can have as many pKs values 
-                 as needed. If you have only bases or only acids, enter for the
-                 opposit "0" as a concentration and [0] as pKs value. 
-                 pKs(Tit) is the pKs value of the titration agent. So if you
-                 use Sodiumhydroxide to titrate something just add [14].
-                 To execute the simulation enter the compute
-                 button.
-        </footer>
-       
-
     </body>
 </html>

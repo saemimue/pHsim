@@ -1,10 +1,11 @@
-import numpy as np, pandas as pd, os, random
+import random
 import pH_sim as p
 import bokeh.plotting as plt
 from bokeh.embed import components
 from bokeh.palettes import Category10
 
 psi = p.pH_calc()
+
 
 def titrate(v_Ac, c_Ac, pKs_Ac, v_B, c_B, pKs_B,
         v_sample, c_Tit, v_Tit, pKs_Tit):
@@ -19,18 +20,19 @@ def titrate(v_Ac, c_Ac, pKs_Ac, v_B, c_B, pKs_B,
             v_Tit,
             pKs_Tit
             ))
-    print (len(x),len(pH))
+    print((len(x), len(pH)))
     return x, pH
 
 TOOLS = "reset, box_zoom, save, pan"
 p = plt.figure(title="Acid/Base Titration Simulation",
-        tools = TOOLS,
-        toolbar_location = "above",
-        x_axis_label = "Volume titrant / ml",
-        y_axis_label = "pH",
-        plot_width = 500,
-        plot_height = 500,
+        tools=TOOLS,
+        toolbar_location="above",
+        x_axis_label="Volume titrant / ml",
+        y_axis_label="pH",
+        plot_width=500,
+        plot_height=500,
         )
+
 
 def show(v_Ac, c_Ac, pKs_Ac, v_B, c_B, pKs_B,
         v_sample, c_Tit, v_Tit, pKs_Tit, erase):
@@ -38,12 +40,12 @@ def show(v_Ac, c_Ac, pKs_Ac, v_B, c_B, pKs_B,
     if erase == "True":
         TOOLS = "reset, box_zoom, save, pan"
         p = plt.figure(title="Acid/Base Titration Simulation",
-                tools = TOOLS,
-                toolbar_location = "above",
-                x_axis_label = "Volume titrant / ml",
-                y_axis_label = "pH",
-                plot_width = 500,
-                plot_height = 500,
+                tools=TOOLS,
+                toolbar_location="above",
+                x_axis_label="Volume titrant / ml",
+                y_axis_label="pH",
+                plot_width=500,
+                plot_height=500,
                 )
     col = random.choice(Category10[10])
     x, pH = titrate(v_Ac,
@@ -57,7 +59,7 @@ def show(v_Ac, c_Ac, pKs_Ac, v_B, c_B, pKs_B,
             v_Tit,
             pKs_Tit
             )
-    p.line(x = x, y = pH,
+    p.line(x=x, y=pH,
             line_color=col,
             line_width=2,
             )
@@ -76,5 +78,5 @@ def show(v_Ac, c_Ac, pKs_Ac, v_B, c_B, pKs_B,
     return head, script, div
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     print("Blop")
