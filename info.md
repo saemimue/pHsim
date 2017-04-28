@@ -1,4 +1,20 @@
-# about apache
+# pH Simulation tool
+=====================
+
+With this python (web) application it is possible to titrate any acid/base
+mixture. A user can give several acid and base concentrations and volumes
+into a _beaker_. Additionally ther can be added some water to dilute the
+sample if needed. Then, the sample can be titrated with an acid/base of
+choice (pKs, Conz., Vol.). As result, the titration curve is calculated and
+displayed as bokeh plot. The user can choose if he want to overlay the plot 
+or display a new figure. The figure can be saved as png file.
+
+## Advantages
+It works but the fomatting of the input form is bad. The dilution during the
+titration is not calculated, so the titration is in a constant volume mode what
+is not perfect. 
+
+## Requirements
 Install apache and libapache-mod-wsgi-py3
 create a xy.wsgi file which calls the controller.py modul and loads the app
 from it. 
