@@ -1,5 +1,5 @@
 # pH Simulation tool
-=====================
+---------------------
 
 With this python (web) application it is possible to titrate any acid/base
 mixture. A user can give several acid and base concentrations and volumes
