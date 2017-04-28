@@ -1,0 +1,29 @@
+{
+  "mainFile": "controller.py", 
+  "use-tabs": false, 
+  "venv": "", 
+  "relatedProjects": [], 
+  "name": "pHsim", 
+  "license": "", 
+  "url": "localhost:5000/Titration-Simulator", 
+  "pythonPath": "python3", 
+  "preExecScript": "", 
+  "additional_builtins": [], 
+  "programParams": "", 
+  "indentation": 4, 
+  "PYTHONPATH": "", 
+  "supported-extensions": [
+    ".py", 
+    ".html", 
+    ".jpg", 
+    ".png", 
+    ".ui", 
+    ".css", 
+    ".json", 
+    ".js", 
+    ".ini"
+  ], 
+  "project-type": "Web application", 
+  "postExecScript": "", 
+  "description": "web application to simulate acid/base titrations"
+}
