@@ -23,6 +23,8 @@ Install apache2, flask, flask-wtf and libapache-mod-wsgi-py3
 create a xy.wsgi file which calls the controller.py modul and loads the app
 from it. 
 Go to /etc/apache2/sites-availabel and create a virtual host described below:
+
+
     <virtualhost *:80> 
         ServerName my.titration
 
